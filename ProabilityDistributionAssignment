@@ -1,0 +1,207 @@
+##########################################v
+# Name: Pramod Yadav
+###################### Assignment 1 ####################v
+# Create the samples
+# (hint: Use Sample function for Assignments a to c)
+# a) Rolling a fair die 3000 times
+# b) Choose 27 random numbers from 30 to 70
+# c) Flip a fair coin 1000 times
+
+r_sample <- sample(c(1, 2, 3, 4, 5, 6), size=3000, replace=TRUE)
+paste0("Sample Rolling a fair die 3000 times: ", r_sample)
+
+rno_sample <- sample(c(30:70), size=27, replace=FALSE)
+print(cat("27 random numbers from 30 to 70: ", rno_sample))
+
+cno_sample <- sample(c("head","tail"), size=1000, replace=TRUE)
+print(cat("27 random numbers from 30 to 70: ", cno_sample))
+
+###################### Assignment 2 ####################v
+# 2) Let x be the normally distributed random variable with mean=0 and standard
+# deviation =30 , with n=100
+# a) Plot the probability distribution of x assuming that the points are normally
+# distributed with mean=0 and standard deviation=30
+# b) Plot the cumulative distribution points.
+# c) Input the probability 0.2 and obtain the number whose cumulative value
+# matches this value (hint: qnorm(0.2, mean=0, sd=30)
+# d) Compute the 50% quantile value using qnorm function
+
+dev.off()
+x <- rnorm(100, mean = 0, sd = 30)
+
+m <- 0
+s <- 30
+
+y <- dnorm(x, m, s)
+round(y, 2)
+# Plot the probability distribution of x
+plot(x, y)   
+
+dev.off()
+z <- pnorm(x, mean=m, sd = s)
+round(z, 2)
+
+# Plot the cumulative distribution points
+plot(x, z)
+
+
+# cumulative value matches this value
+t <- qnorm(0.2, mean=0, sd=30)
+
+#  Compute the 50% quantile value using qnorm function
+l <- qnorm(0.5, mean= mean(x), sd= sd(x))
+
+
+
+###################### Assignment 3 ####################v
+# 3) In the above example observe and briefly explain what happens to the normal
+# distribution curve when you change the mean & variance
+# a. change SD to 15
+# b. change SD to 45
+# c. Change the mean to 50
+# d. Change the mean to -50
+
+
+dev.off()
+x <- rnorm(100, mean = 0, sd = 30)
+#hist(x, main = "Normal Distribution When SD = 20")
+
+l <- rnorm(100, mean = 0, sd = 15)
+#hist(x, main = "Normal Distribution When SD = 15")
+
+plot(x, y, l)
+
+
+
+
+
+
+########################## Assignment 4 ####################################
+# 4) Draw a histogram of 5000 random variables normally distributed with given SD=
+#   5 and mean=20 (hint : use rnorm)
+
+dev.off()
+x <- rnorm(5000, mean = 20, sd = 5)
+hist(x, main = "Normal Distribution When SD = 20")
+
+
+
+
+
+#   5) Calculate the probability that a normally distributed random variable with mean 22 and variance 25
+# a) is greater than 29
+# b) is less than 17
+# c) is less than 15 or greater than 25
+
+
+# a) is greater than 29
+a <- 1-pnorm(29, mean = 22,sd = 5)
+print(a)
+
+#b. 
+b <- pnorm(17, mean = 22, sd = 5)
+print(b)
+
+# is less than 15 or greater than 25 
+c <- pnorm(15, 22, sd=5) + (1-pnorm(25, 22, sd=5))
+print(c)
+
+
+# 6) If the mean length of a sample of rock cod (a fish variety) is 30 inches and the
+# variance is 4 inches, calculate the approximate probability that a certain rock cod
+# fish is 31 in. long. Calculate the probability using the equation
+#  
+#a) 
+# Hint: 1/(sqrt(2*pi)*sigma)*exp( -((31 - mu)^2/(2*sigma^2)))
+# b) Verify the same using dnorm() function
+# Hint: dnorm(31,mu,sigma)
+#
+
+#a. 
+# where mu is the mean of the distribution and sigma the standard deviation.
+sigma <- sqrt(4)
+mu <- 30
+p <- 1/(sqrt(2*pi)*sigma)*exp( -((31 - mu)^2/(2*sigma^2)))
+print(p);
+
+q <- dnorm(31,mu,sigma)
+
+paste0("Probability with equation: ",p," Probability with dnorm function: ", q)
+
+
+# 7. You are conducting an experiment in which you need to examine 40 full grown
+# potato plants. You plant 60 of the plants, knowing that 65% of the plants will
+# reach the fully grown state.
+# a. What is the probability that exactly 40 of the 60 plants will be fully grown?
+# b. What is the probability that at least 40 of the 60 plants will be fully grown?
+
+#a.
+p <- dbinom(40,60,0.65)
+
+#b.
+q <- pbinom(40,60,0.65)
+
+
+
+# 8. Calculate the probability that in 60 tosses of a fair coin the head comes up
+# a) 20, 25 or 30 times
+# b) less than 20 times
+# c) between 20 and 30 times
+
+#a. 
+p <- sum(dbinom(c(20,25,30),60,prob=0.5))
+paste0("20, 25 or 30 times: " ,p)
+
+#b. 
+q <- pbinom(19,60,prob=0.5)
+paste0("less than 20 times: ",q)
+
+#c.
+r <- pbinom(30,60,prob=0.5)-pbinom(20,60,prob=0.5)
+paste0("between 20 and 30 times: ",r)
+
+
+# 9. Generate a series of Poisson distributions for different λ values. Keep the number of items in all 
+# the distribution s as 100. Observe and explain what happens to the distribution when value of λ changes.
+
+x1 <- dpois(100, 10)
+print(x1)
+x2 <- dpois(100, 20)
+print(x2)
+x3 <- dpois(100, 35)
+print(x3)
+x4 <- dpois(100, 40)
+print(x4)
+x5 <- dpois(100, 60)
+print(x5)
+x6 <- dpois(100, 70)
+print(x6)
+x7 <- dpois(100, 90)
+print(x7)
+
+
+# 10. The emission of alpha particles by polonium fits a Poisson distribution.
+# Generate 2608 numbers as per this distribution with Poisson rate parameter λ =
+#   10097/2608. Plot a histogram of the same .
+
+dev.off()
+lambda = 10097/2608
+n <- rpois(2608, lambda)
+hist(n) 
+dev.off()
+
+
+# 11. A random variable X has Poisson distribution with mean 7. Find the probability
+# that
+# a. X is less than 5
+# b. X is greater than 10
+# c. X is between 4 and 16
+
+a <- ppois(4,7)
+paste0("X is less than 5: " ,a)
+
+b <- 1-ppois(10,7)
+paste0("X is greater than 10: " ,b)
+
+c <- ppois(16,7)-ppois(3,7)
+paste0("X is between 4 and 16: " ,c)
